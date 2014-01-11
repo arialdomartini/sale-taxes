@@ -4,7 +4,7 @@ namespace SalesTax
 {
     public class Basket
     {
-	    private Item _item;
+	    private readonly Item _item;
 
 	    public Basket(Item item)
 	    {
@@ -21,19 +21,4 @@ namespace SalesTax
 			get { return _item != null?_item.Prize : 0; }
 	    }
     }
-
-	public class Item
-	{
-		private decimal _prize;
-
-		public Item(decimal prize)
-		{
-			_prize = prize;
-		}
-
-		public decimal Prize
-		{
-			get { return _prize; }
-		}
-	}
 }
