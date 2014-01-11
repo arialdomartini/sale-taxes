@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 using SharpTestsEx;
 
 namespace SalesTax.Test
@@ -22,5 +23,16 @@ namespace SalesTax.Test
 			basket.Total.Should().Be.EqualTo(item.Prize);
 		}
 
+		[Test]
+		public void a_basket_total_is_equal_to_the_sum_of_the_items_it_contains()
+		{
+			var items = new List<Item>();
+			items.Add(new Item(1));
+			items.Add(new Item(2));
+			items.Add(new Item((decimal) 2.5));
+			var basket = new Basket(items);
+
+			basket.Total.Should().Be(1 + 2 + 2.5);
+		}
     }
 }
