@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesTax", "SalesTax\SalesTax.csproj", "{BD2B1CEE-0A8D-4CC0-AD4B-EBA330A25BA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesTax.Test", "SalesTax.Test\SalesTax.Test.csproj", "{6EF4C21F-17B8-43A8-8E63-C64F5AA6A3AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD2B1CEE-0A8D-4CC0-AD4B-EBA330A25BA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD2B1CEE-0A8D-4CC0-AD4B-EBA330A25BA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD2B1CEE-0A8D-4CC0-AD4B-EBA330A25BA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD2B1CEE-0A8D-4CC0-AD4B-EBA330A25BA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EF4C21F-17B8-43A8-8E63-C64F5AA6A3AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EF4C21F-17B8-43A8-8E63-C64F5AA6A3AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EF4C21F-17B8-43A8-8E63-C64F5AA6A3AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EF4C21F-17B8-43A8-8E63-C64F5AA6A3AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

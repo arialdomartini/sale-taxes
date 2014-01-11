@@ -1,0 +1,7 @@
+*.suo
+*.user
+lib/
+src/SalesTax.Test/bin/
+src/SalesTax.Test/obj
+src/SalesTax/bin/
+src/SalesTax/obj/
