@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Basket.cs" />
+    <Compile Include="IReceiptFormatter.cs" />
     <Compile Include="Items\MedicalProduct.cs" />
     <Compile Include="TaxCalculators\DutyTaxCalculator.cs" />
     <Compile Include="TaxCalculators\ITaxCalculator.cs" />

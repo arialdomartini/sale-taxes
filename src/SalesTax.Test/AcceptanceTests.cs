@@ -39,7 +39,7 @@ namespace SalesTax.Test
 				};
 
 			var taxesCalculator = BuildTaxesCalculator();
-			var basket = new Basket(taxesCalculator, items);
+			var basket = new Basket(taxesCalculator, null, items);
 
 			basket.Total.Should().Be.EqualTo(11.2 + 0.05 + 0.50);
 			basket.TotalTaxes.Should().Be.EqualTo(0.05 + 0.50);
@@ -56,7 +56,7 @@ namespace SalesTax.Test
 				};
 
 			var taxesCalculator = BuildTaxesCalculator();
-			var basket = new Basket(taxesCalculator, items);
+			var basket = new Basket(taxesCalculator, null, items);
 
 			basket.Total.Should().Be.EqualTo( (1000 + 100 + 50)  
 												+ 11.2 + 0.05 + 0.50);
@@ -89,7 +89,7 @@ namespace SalesTax.Test
 				};
 
 			var taxesCalculator = BuildTaxesCalculator();
-			var basket = new Basket(taxesCalculator, items);
+			var basket = new Basket(taxesCalculator, null, items);
 
 			basket.Total.Should().Be.EqualTo((decimal) 29.83);
 			basket.TotalTaxes.Should().Be.EqualTo((decimal) 1.50);
@@ -119,7 +119,7 @@ namespace SalesTax.Test
 				};
 
 			var taxesCalculator = BuildTaxesCalculator();
-			var basket = new Basket(taxesCalculator, items);
+			var basket = new Basket(taxesCalculator, null, items);
 
 			basket.Total.Should().Be.EqualTo((decimal)65.15);
 			basket.TotalTaxes.Should().Be.EqualTo((decimal)7.65);
@@ -154,7 +154,7 @@ namespace SalesTax.Test
 				};
 
 			var taxesCalculator = BuildTaxesCalculator();
-			var basket = new Basket(taxesCalculator, items);
+			var basket = new Basket(taxesCalculator, null, items);
 
 			basket.Total.Should().Be.EqualTo((decimal)74.63);
 			basket.TotalTaxes.Should().Be.EqualTo((decimal)6.65);

@@ -11,17 +11,19 @@ namespace SalesTax.Test
 	public class BasketTest
     {
 		private ITaxCalculator _taxCalculator;
+		private IReceiptFormatter _receiptFormatter;
 
 		[SetUp]
 		public void SetUp()
 		{
 			_taxCalculator = Substitute.For<ITaxCalculator>();
+			_receiptFormatter = Substitute.For<IReceiptFormatter>();
 		}
 
 		[Test]
 		public void an_empty_basket_has_total_equals_to_0()
 		{
-			var basket = new Basket(_taxCalculator);
+			var basket = new Basket(_taxCalculator, _receiptFormatter);
 
 			basket.Total.Should().Be.EqualTo(0);
 		}
@@ -29,7 +31,7 @@ namespace SalesTax.Test
 		[Test]
 		public void total_taxes_for_an_empty_basket_is_0()
 		{
-			var basket = new Basket(_taxCalculator);
+			var basket = new Basket(_taxCalculator, _receiptFormatter);
 
 			basket.TotalTaxes.Should().Be.EqualTo(0);
 		}
@@ -40,7 +42,7 @@ namespace SalesTax.Test
 			var item = new Item("generic item", 14);
 			const decimal tax = (decimal) 0.1;
 			_taxCalculator.CalculateOn(item).Returns(tax);
-			var basket = new Basket(_taxCalculator, item);
+			var basket = new Basket(_taxCalculator, _receiptFormatter, item);
 
 			basket.Total.Should().Be.EqualTo(item.Price + tax);
 		}
@@ -51,7 +53,7 @@ namespace SalesTax.Test
 			var item = new Item("generic item", 14);
 			const decimal dutyTax = (decimal)0.1;
 			_taxCalculator.CalculateOn(item).Returns(dutyTax);
-			var basket = new Basket(_taxCalculator, item);
+			var basket = new Basket(_taxCalculator, _receiptFormatter, item);
 
 			basket.TotalTaxes.Should().Be.EqualTo(dutyTax);
 		}
@@ -66,7 +68,7 @@ namespace SalesTax.Test
 			_taxCalculator.CalculateOn(item1).Returns((decimal)0.1);
 			_taxCalculator.CalculateOn(item2).Returns((decimal)0.4);
 
-			var basket = new Basket(_taxCalculator, new List<ICanBeSold> { item1, item2 });
+			var basket = new Basket(_taxCalculator, _receiptFormatter, new List<ICanBeSold> { item1, item2 });
 
 			// when
 			var total = basket.Total;
@@ -85,7 +87,7 @@ namespace SalesTax.Test
 			_taxCalculator.CalculateOn(item1).Returns((decimal)0.1);
 			_taxCalculator.CalculateOn(item2).Returns((decimal)0.4);
 
-			var basket = new Basket(_taxCalculator, new List<ICanBeSold> { item1, item2 });
+			var basket = new Basket(_taxCalculator, _receiptFormatter, new List<ICanBeSold> { item1, item2 });
 
 			// when
 			var totalTaxes = basket.TotalTaxes;
@@ -94,19 +96,15 @@ namespace SalesTax.Test
 			totalTaxes.Should().Be((decimal)0.1 + (decimal)0.4);
 		}
 
-
-		#region Receipt
 		[Test]
-		public void an_empty_basket_should_print_an_empty_receipt()
+		public void basket_should_delegate_to_its_receipt_formatter_the_printing_of_receipt()
 		{
-			var basket = new Basket(_taxCalculator);
+			var basket = new Basket(_taxCalculator, _receiptFormatter);
 
-			var actual = basket.PrintReceipt();
+			basket.PrintReceipt();
 
-			actual.Should().Contain("Sales Taxes: 0.00");
-			actual.Should().Contain("Total: 0.00");
+			_receiptFormatter.Received().Print();
 		}
-
-		#endregion
+		
     }
 }

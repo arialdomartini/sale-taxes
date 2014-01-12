@@ -10,16 +10,18 @@ namespace SalesTax
     {
 	    private readonly ITaxCalculator _dutyTaxCalculator;
 	    private readonly List<ICanBeSold> _items;
+	    private IReceiptFormatter _receiptFormatter;
 
-		public Basket(ITaxCalculator dutyTaxCalculator, List<ICanBeSold> items)
+	    public Basket(ITaxCalculator dutyTaxCalculator, IReceiptFormatter receiptFormatter, List<ICanBeSold> items)
 		{
 			_dutyTaxCalculator = dutyTaxCalculator;
-			_items = items;
+		    _receiptFormatter = receiptFormatter;
+		    _items = items;
 		}
 
-		public Basket(ITaxCalculator dutyTaxCalculator, ICanBeSold item) : this(dutyTaxCalculator, new List<ICanBeSold> { item }) { }
+		public Basket(ITaxCalculator dutyTaxCalculator, IReceiptFormatter receiptFormatter, ICanBeSold item) : this(dutyTaxCalculator, receiptFormatter, new List<ICanBeSold> { item }) { }
 
-		public Basket(ITaxCalculator dutyTaxCalculator) : this(dutyTaxCalculator, new List<ICanBeSold>()) { }
+		public Basket(ITaxCalculator dutyTaxCalculator, IReceiptFormatter receiptFormatter) : this(dutyTaxCalculator, receiptFormatter, new List<ICanBeSold>()) { }
 
 	    public decimal Total
 	    {
@@ -42,10 +44,7 @@ namespace SalesTax
 
 	    public string PrintReceipt()
 	    {
-		    return 
-@"Sales Taxes: 0.00
-Total: 0.00";
-
+		    return _receiptFormatter.Print();
 	    }
     }
 }
