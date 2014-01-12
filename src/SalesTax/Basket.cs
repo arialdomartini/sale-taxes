@@ -8,27 +8,27 @@ namespace SalesTax
 {
     public class Basket
     {
-	    private readonly ITaxCalculator _dutyTaxCalculator;
+	    private readonly ITaxCalculator _taxCalculator;
 	    private readonly List<ICanBeSold> _items;
 	    private IReceiptFormatter _receiptFormatter;
 
-	    public Basket(ITaxCalculator dutyTaxCalculator, IReceiptFormatter receiptFormatter, List<ICanBeSold> items)
+	    public Basket(ITaxCalculator taxCalculator, IReceiptFormatter receiptFormatter, List<ICanBeSold> items)
 		{
-			_dutyTaxCalculator = dutyTaxCalculator;
+			_taxCalculator = taxCalculator;
 		    _receiptFormatter = receiptFormatter;
 		    _items = items;
 		}
 
-		public Basket(ITaxCalculator dutyTaxCalculator, IReceiptFormatter receiptFormatter, ICanBeSold item) : this(dutyTaxCalculator, receiptFormatter, new List<ICanBeSold> { item }) { }
+		public Basket(ITaxCalculator taxCalculator, IReceiptFormatter receiptFormatter, ICanBeSold item) : this(taxCalculator, receiptFormatter, new List<ICanBeSold> { item }) { }
 
-		public Basket(ITaxCalculator dutyTaxCalculator, IReceiptFormatter receiptFormatter) : this(dutyTaxCalculator, receiptFormatter, new List<ICanBeSold>()) { }
+		public Basket(ITaxCalculator taxCalculator, IReceiptFormatter receiptFormatter) : this(taxCalculator, receiptFormatter, new List<ICanBeSold>()) { }
 
 	    public decimal Total
 	    {
 			get { 
 				return _items.Aggregate((decimal) 0, 
 					(subtotal, item) => 
-						subtotal + item.Price + _dutyTaxCalculator.CalculateOn(item));
+						subtotal + item.Price + _taxCalculator.CalculateOn(item));
 			}
 	    }
 
@@ -38,7 +38,7 @@ namespace SalesTax
 			{
 				return _items.Aggregate((decimal)0,
 					(subtotal, item) =>
-						subtotal + _dutyTaxCalculator.CalculateOn(item));
+						subtotal + _taxCalculator.CalculateOn(item));
 			}
 	    }
 
