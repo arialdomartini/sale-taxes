@@ -2,13 +2,13 @@ namespace SalesTax.Items
 {
 	public class Book : ICanBeSold
 	{
-		public string Title { get; private set; }
+		public string Name { get; private set; }
 		public decimal Price { get; private set; }
 		public bool HasBeenImported { get; private set; }
 
 		public Book(string title, decimal price, bool hasBeenImported)
 		{
-			Title = title;
+			Name = title;
 			Price = price;
 			HasBeenImported = hasBeenImported;
 		}

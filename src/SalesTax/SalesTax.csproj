@@ -40,7 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Basket.cs" />
+    <Compile Include="ICurrencyFormatter.cs" />
+    <Compile Include="IReceiptFormatter.cs" />
     <Compile Include="Items\MedicalProduct.cs" />
+    <Compile Include="PlainTextReceiptFormatter.cs" />
+    <Compile Include="PrintableItem.cs" />
     <Compile Include="TaxCalculators\DutyTaxCalculator.cs" />
     <Compile Include="TaxCalculators\ITaxCalculator.cs" />
     <Compile Include="Items\Book.cs" />
