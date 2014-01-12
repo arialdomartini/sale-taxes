@@ -93,5 +93,20 @@ namespace SalesTax.Test
 			// then
 			totalTaxes.Should().Be((decimal)0.1 + (decimal)0.4);
 		}
+
+
+		#region Receipt
+		[Test]
+		public void an_empty_basket_should_print_an_empty_receipt()
+		{
+			var basket = new Basket(_taxCalculator);
+
+			var actual = basket.PrintReceipt();
+
+			actual.Should().Contain("Sales Taxes: 0.00");
+			actual.Should().Contain("Total: 0.00");
+		}
+
+		#endregion
     }
 }

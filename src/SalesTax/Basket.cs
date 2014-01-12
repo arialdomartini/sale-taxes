@@ -39,5 +39,13 @@ namespace SalesTax
 						subtotal + _dutyTaxCalculator.CalculateOn(item));
 			}
 	    }
+
+	    public string PrintReceipt()
+	    {
+		    return 
+@"Sales Taxes: 0.00
+Total: 0.00";
+
+	    }
     }
 }
