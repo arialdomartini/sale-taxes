@@ -83,17 +83,25 @@ namespace SalesTax.Test
 
 			var items = new List<ICanBeSold>
 				{
-					new Book("Name", (decimal) 12.49),
-					new Item("Music CD", (decimal) 14.99),
-					new Food("Chocolate bar", (decimal) 0.85)
+					new Book("book", (decimal) 12.49),
+					new Item("music CD", (decimal) 14.99),
+					new Food("chocolate bar", (decimal) 0.85)
 				};
 
 			var taxesCalculator = BuildTaxesCalculator();
-			var basket = new Basket(taxesCalculator, null, items);
+			var receiptFormatter = new PlainTextReceiptFormatter(new StaticCurrencyFormatter());
+			var basket = new Basket(taxesCalculator, receiptFormatter, items);
 
 			basket.Total.Should().Be.EqualTo((decimal) 29.83);
 			basket.TotalTaxes.Should().Be.EqualTo((decimal) 1.50);
 
+			var receipt = basket.PrintReceipt();
+
+			receipt.Should().Contain("book: 12.49");
+			receipt.Should().Contain("music CD: 16.49");
+			receipt.Should().Contain("chocolate bar: 0.85");
+			receipt.Should().Contain("Sales Taxes: 1.50");
+			receipt.Should().Contain("Total: 29.83");
 		}
 
 		[Test]
@@ -114,16 +122,24 @@ namespace SalesTax.Test
 
 			var items = new List<ICanBeSold>
 				{
-					new Food("Chocolate", (decimal) 10.00, hasBeenImported: true),
-					new Item("Perfume", (decimal) 47.50, hasBeenImported: true)
+					new Food("imported box of chocolates", (decimal) 10.00, hasBeenImported: true),
+					new Item("imported bottle of perfume", (decimal) 47.50, hasBeenImported: true)
 				};
 
 			var taxesCalculator = BuildTaxesCalculator();
-			var basket = new Basket(taxesCalculator, null, items);
+			var receiptFormatter = new PlainTextReceiptFormatter(new StaticCurrencyFormatter());
+			var basket = new Basket(taxesCalculator, receiptFormatter, items);
 
 			basket.Total.Should().Be.EqualTo((decimal)65.15);
 			basket.TotalTaxes.Should().Be.EqualTo((decimal)7.65);
 
+
+			var receipt = basket.PrintReceipt();
+
+			receipt.Should().Contain("imported box of chocolates: 10.50");
+			receipt.Should().Contain("imported bottle of perfume: 54.65");
+			receipt.Should().Contain("Sales Taxes: 7.65");
+			receipt.Should().Contain("Total: 65.15");
 		}
 
 		[Test]
@@ -141,23 +157,34 @@ namespace SalesTax.Test
 				1 bottle of perfume: 20.89
 				1 packet of headache pills: 9.75
 				1 imported box of chocolates: 11.85 ==> 11.80 [This does not reflect with the given requirements. A discussion with the customer is needed.] 
-				Sales Taxes: 6.70
-				Total: 74.68
+				Sales Taxes: 6.70 => [Consequentely, this this be 6.65]
+				Total: 74.68 => [and the total is 0.05 less, then 74.63]
 			*/
 
 			var items = new List<ICanBeSold>
 				{
-					new Item("Perfume", (decimal) 27.99, hasBeenImported: true),
-					new Item("Perfume", (decimal) 18.99, hasBeenImported: false),
-					new MedicalProduct("Headache pills", (decimal) 9.75),
-					new Food("Chocolate", (decimal) 11.25, hasBeenImported: true),
+					new Item("imported bottle of perfume", (decimal) 27.99, hasBeenImported: true),
+					new Item("bottle of perfume", (decimal) 18.99, hasBeenImported: false),
+					new MedicalProduct("packet of headache pills", (decimal) 9.75),
+					new Food("imported box of chocolates", (decimal) 11.25, hasBeenImported: true),
 				};
 
 			var taxesCalculator = BuildTaxesCalculator();
-			var basket = new Basket(taxesCalculator, null, items);
+			var receiptFormatter = new PlainTextReceiptFormatter(new StaticCurrencyFormatter());
+			var basket = new Basket(taxesCalculator, receiptFormatter, items);
 
 			basket.Total.Should().Be.EqualTo((decimal)74.63);
 			basket.TotalTaxes.Should().Be.EqualTo((decimal)6.65);
+
+			var receipt = basket.PrintReceipt();
+
+			receipt.Should().Contain("imported bottle of perfume: 32.19");
+			receipt.Should().Contain("bottle of perfume: 20.89");
+			receipt.Should().Contain("packet of headache pills: 9.75");
+			receipt.Should().Contain("imported box of chocolates: 11.80");
+			receipt.Should().Contain("Sales Taxes: 6.65");
+			receipt.Should().Contain("Total: 74.63");
+
 
 		}
 

@@ -51,5 +51,17 @@ namespace SalesTax.Test
 
 			actual.Should().Contain("Total: 26.00");
 		}
+		
+		[Test]
+		public void a_receipt_should_list_the_sum_of_taxes()
+		{
+			_sut.Add("Cocco Bill1", 10, 3);
+			_sut.Add("Cocco Bill2", 10, 3);
+			_currencyFormatter.Format((decimal)3.00).Returns("3.00");
+			_currencyFormatter.Format((decimal)6.00).Returns("6.00");
+			var actual = _sut.Print();
+
+			actual.Should().Contain("Sales Taxes: 6.00");
+		}
 	}
 }
