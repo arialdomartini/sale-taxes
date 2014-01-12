@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SalesTax.Items;
+using SalesTax.TaxCalculators;
 
 namespace SalesTax
 {
     public class Basket
     {
 	    private readonly ITaxCalculator _dutyTaxCalculator;
-	    private readonly List<Item> _items;
+	    private readonly List<ICanBeSold> _items;
 
-		public Basket(ITaxCalculator dutyTaxCalculator, List<Item> items)
+		public Basket(ITaxCalculator dutyTaxCalculator, List<ICanBeSold> items)
 		{
 			_dutyTaxCalculator = dutyTaxCalculator;
 			_items = items;
 		}
 
-	    public Basket(ITaxCalculator dutyTaxCalculator, Item item) : this(dutyTaxCalculator, new List<Item> {item}) { }
+		public Basket(ITaxCalculator dutyTaxCalculator, ICanBeSold item) : this(dutyTaxCalculator, new List<ICanBeSold> { item }) { }
 
-	    public Basket(ITaxCalculator dutyTaxCalculator) : this(dutyTaxCalculator, new List<Item>()) { }
+		public Basket(ITaxCalculator dutyTaxCalculator) : this(dutyTaxCalculator, new List<ICanBeSold>()) { }
 
 	    public decimal Total
 	    {

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
+using SalesTax.Items;
+using SalesTax.TaxCalculators;
 using SharpTestsEx;
 using NSubstitute;
 
@@ -8,18 +10,18 @@ namespace SalesTax.Test
 	[TestFixture]
 	public class BasketTest
     {
-		private ITaxCalculator _dutyTaxCalculator;
+		private ITaxCalculator _taxCalculator;
 
 		[SetUp]
 		public void SetUp()
 		{
-			_dutyTaxCalculator = Substitute.For<ITaxCalculator>();
+			_taxCalculator = Substitute.For<ITaxCalculator>();
 		}
 
 		[Test]
 		public void an_empty_basket_has_total_equals_to_0()
 		{
-			var basket = new Basket(_dutyTaxCalculator);
+			var basket = new Basket(_taxCalculator);
 
 			basket.Total.Should().Be.EqualTo(0);
 		}
@@ -27,44 +29,44 @@ namespace SalesTax.Test
 		[Test]
 		public void total_taxes_for_an_empty_basket_is_0()
 		{
-			var basket = new Basket(_dutyTaxCalculator);
+			var basket = new Basket(_taxCalculator);
 
 			basket.TotalTaxes.Should().Be.EqualTo(0);
 		}
 
 		[Test]
-		public void a_basket_total_is_equal_to_the_price_of_its_only_item_with_duty_tax_applied()
+		public void a_basket_total_is_equal_to_the_price_of_its_only_item_with_all_taxes_applied()
 		{
-			var item = new Item(14);
-			const decimal dutyTax = (decimal) 0.1;
-			_dutyTaxCalculator.CalculateOn(item).Returns(dutyTax);
-			var basket = new Basket(_dutyTaxCalculator, item);
+			var item = new Item("generic item", 14);
+			const decimal tax = (decimal) 0.1;
+			_taxCalculator.CalculateOn(item).Returns(tax);
+			var basket = new Basket(_taxCalculator, item);
 
-			basket.Total.Should().Be.EqualTo(item.Price + dutyTax);
+			basket.Total.Should().Be.EqualTo(item.Price + tax);
 		}
 
 		[Test]
-		public void a_basket_applies_the_duty_taxes_to_its_only_items()
+		public void a_basket_returns_the_applied_taxes_to_its_only_items()
 		{
-			var item = new Item(14);
+			var item = new Item("generic item", 14);
 			const decimal dutyTax = (decimal)0.1;
-			_dutyTaxCalculator.CalculateOn(item).Returns(dutyTax);
-			var basket = new Basket(_dutyTaxCalculator, item);
+			_taxCalculator.CalculateOn(item).Returns(dutyTax);
+			var basket = new Basket(_taxCalculator, item);
 
 			basket.TotalTaxes.Should().Be.EqualTo(dutyTax);
 		}
 
 		[Test]
-		public void a_basket_total_is_equal_to_the_sum_of_the_items_it_contains_duty_tax_applied()
+		public void a_basket_total_is_equal_to_the_sum_of_the_items_it_contains_with_all_the_taxes_applied()
 		{
 			// given
-			var item1 = new Item(14);
-			var item2 = new Item(140);
+			var item1 = new Item("generic item", 14);
+			var item2 = new Item("generic item", 140);
 
-			_dutyTaxCalculator.CalculateOn(item1).Returns((decimal)0.1);
-			_dutyTaxCalculator.CalculateOn(item2).Returns((decimal)0.4);
+			_taxCalculator.CalculateOn(item1).Returns((decimal)0.1);
+			_taxCalculator.CalculateOn(item2).Returns((decimal)0.4);
 
-			var basket = new Basket(_dutyTaxCalculator, new List<Item> {item1, item2});
+			var basket = new Basket(_taxCalculator, new List<ICanBeSold> { item1, item2 });
 
 			// when
 			var total = basket.Total;
@@ -74,16 +76,16 @@ namespace SalesTax.Test
 		}
 
 		[Test]
-		public void total_taxes_are_the_sum_of_duty_taxes_of_each_item()
+		public void total_taxes_are_the_sum_of_the_taxes_of_each_item()
 		{
 			// given
-			var item1 = new Item(14);
-			var item2 = new Item(140);
+			var item1 = new Item("generic item", 14);
+			var item2 = new Item("generic item", 140);
 
-			_dutyTaxCalculator.CalculateOn(item1).Returns((decimal)0.1);
-			_dutyTaxCalculator.CalculateOn(item2).Returns((decimal)0.4);
+			_taxCalculator.CalculateOn(item1).Returns((decimal)0.1);
+			_taxCalculator.CalculateOn(item2).Returns((decimal)0.4);
 
-			var basket = new Basket(_dutyTaxCalculator, new List<Item> { item1, item2 });
+			var basket = new Basket(_taxCalculator, new List<ICanBeSold> { item1, item2 });
 
 			// when
 			var totalTaxes = basket.TotalTaxes;

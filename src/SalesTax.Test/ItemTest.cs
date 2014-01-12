@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SalesTax.Items;
 using SharpTestsEx;
 
 namespace SalesTax.Test
@@ -14,7 +15,7 @@ namespace SalesTax.Test
 		[TestCase(100)]
 		public void an_item_price_is_specified_when_the_item_is_constructed(decimal price)
 		{
-			new Item(price).Price.Should().Be.EqualTo(price);
+			new Item("iPod", price).Price.Should().Be.EqualTo(price);
 		}
 	}
 }

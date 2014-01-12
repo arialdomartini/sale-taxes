@@ -57,9 +57,16 @@
   <ItemGroup>
     <Compile Include="AcceptanceTests.cs" />
     <Compile Include="BasketTest.cs" />
-    <Compile Include="DutyTaxCalculatorTest.cs" />
+    <Compile Include="Items\BookTest.cs" />
+    <Compile Include="Items\FoodTest.cs" />
+    <Compile Include="Items\MedicalProductTest.cs" />
+    <Compile Include="Items\ItemTest.cs" />
+    <Compile Include="TaxCalculator\DutyTaxCalculatorTest.cs" />
     <Compile Include="ItemTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TaxCalculator\RoundTest.cs" />
+    <Compile Include="TaxCalculator\SalesTaxesCalculatorTest.cs" />
+    <Compile Include="TaxCalculator\TaxesCalculatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
