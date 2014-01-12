@@ -16,8 +16,8 @@ namespace SalesTax.Test
 			var taxesCalculator = new TaxesCalculator(
 				new List<ITaxCalculator>
 					{
-						new DutyTaxCalculator(new Round()),
-						new SalesTaxCalculator(new Round(), new List<Type>
+						new DutyTaxCalculator(new RoundAndQuantize()),
+						new SalesTaxCalculator(new RoundAndQuantize(), new List<Type>
 							{
 								typeof (Book),
 								typeof (Food),

@@ -23,7 +23,7 @@ namespace SalesTax.Test.TaxCalculator
 		public void taxes_are_10percent_of_the_price(decimal price, decimal salesTax)
 		{
 			var exceptions = new List<Type>();
-			var actual = new SalesTaxCalculator(new Round(), exceptions).CalculateOn(new Item("An item", price));
+			var actual = new SalesTaxCalculator(new RoundAndQuantize(), exceptions).CalculateOn(new Item("An item", price));
 
 			actual.Should().Be.EqualTo(salesTax);
 		}
@@ -32,7 +32,7 @@ namespace SalesTax.Test.TaxCalculator
 		public void taxes_are_not_applied_to_books()
 		{
 			var exceptions = new List<Type>{ typeof(Book)};
-			var actual = new SalesTaxCalculator(new Round(), exceptions).CalculateOn(new Book("Q", 100));
+			var actual = new SalesTaxCalculator(new RoundAndQuantize(), exceptions).CalculateOn(new Book("Q", 100));
 
 			actual.Should().Be.EqualTo(0);
 		}

@@ -1,15 +1,15 @@
 ﻿namespace SalesTax.TaxCalculators
 {
-	public class Round
+	public class RoundAndQuantize : IRoundStrategy
 	{
 		private readonly decimal _step;
 
-		public Round()
+		public RoundAndQuantize()
 		{
 			_step = (decimal) 0.05;
 		}
 
-		public decimal RoundAndQuantize(decimal value)
+		public decimal Round(decimal value)
 		{
 			return decimal.Round(
 				decimal.Round(value / _step) * _step, 2);

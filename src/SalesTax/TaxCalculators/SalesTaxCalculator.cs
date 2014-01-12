@@ -6,12 +6,12 @@ namespace SalesTax.TaxCalculators
 {
 	public class SalesTaxCalculator : ITaxCalculator
 	{
-		private readonly Round _round;
+		private readonly IRoundStrategy _roundStrategy;
 		private readonly List<Type> _exceptions;
 
-		public SalesTaxCalculator(Round round, List<Type> exceptions)
+		public SalesTaxCalculator(IRoundStrategy roundStrategy, List<Type> exceptions)
 		{
-			_round = round;
+			_roundStrategy = roundStrategy;
 			_exceptions = exceptions;
 		}
 
@@ -22,8 +22,7 @@ namespace SalesTax.TaxCalculators
 				return 0;
 
 			var rawTax = (item.Price * 10 / 100);
-			return decimal.Round(rawTax / 5, 2, MidpointRounding.ToEven) * 5;
-
+			return _roundStrategy.Round(rawTax);
 		}
 	}
 }

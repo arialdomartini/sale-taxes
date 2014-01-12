@@ -19,9 +19,9 @@ namespace SalesTax.Test.TaxCalculator
 		[TestCase(2.28, 2.30)]
 		public void rounds_to_the_nearest_value(decimal value, decimal roundedValueExpected)
 		{
-			var sut = new Round();
+			var sut = new RoundAndQuantize();
 
-			sut.RoundAndQuantize(value).Should().Be.EqualTo(roundedValueExpected);
+			sut.Round(value).Should().Be.EqualTo(roundedValueExpected);
 		}
 	}
 }

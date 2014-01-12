@@ -5,11 +5,11 @@ namespace SalesTax.TaxCalculators
 {
 	public class DutyTaxCalculator : ITaxCalculator
 	{
-		private readonly Round _round;
+		private readonly IRoundStrategy _roundStrategy;
 
-		public DutyTaxCalculator(Round round)
+		public DutyTaxCalculator(IRoundStrategy roundStrategy)
 		{
-			_round = round;
+			_roundStrategy = roundStrategy;
 		}
 
 		public decimal CalculateOn(ICanBeSold item)
@@ -17,7 +17,7 @@ namespace SalesTax.TaxCalculators
 			if (! item.HasBeenImported)
 				return 0;
 			var rawTax = (item.Price*5/100);
-			return _round.RoundAndQuantize(rawTax);
+			return _roundStrategy.Round(rawTax);
 		}
 	}
 }

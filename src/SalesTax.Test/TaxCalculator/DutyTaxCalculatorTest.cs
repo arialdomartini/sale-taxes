@@ -13,7 +13,7 @@ namespace SalesTax.Test.TaxCalculator
 		[SetUp]
 		public void SetUp()
 		{
-			_sut = new DutyTaxCalculator(new Round());
+			_sut = new DutyTaxCalculator(new RoundAndQuantize());
 		}
 
 		[TestCase(0, 0)]
