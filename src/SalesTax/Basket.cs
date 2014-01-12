@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SalesTax
 {
@@ -21,9 +22,9 @@ namespace SalesTax
 	    public decimal Total
 	    {
 			get { 
-				decimal total = 0; 
-				_items.ForEach(i => total += i.Price + _dutyTaxCalculator.CalculateOn(i));
-				return total;
+				return _items.Aggregate((decimal) 0, 
+					(subtotal, item) => 
+						subtotal + item.Price + _dutyTaxCalculator.CalculateOn(item));
 			}
 	    }
 
@@ -31,9 +32,9 @@ namespace SalesTax
 	    {
 			get
 			{
-				decimal total = 0;
-				_items.ForEach(i => total += _dutyTaxCalculator.CalculateOn(i));
-				return total;
+				return _items.Aggregate((decimal)0,
+					(subtotal, item) =>
+						subtotal + _dutyTaxCalculator.CalculateOn(item));
 			}
 	    }
     }
