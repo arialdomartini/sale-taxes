@@ -12,9 +12,9 @@ namespace SalesTax.Test
 		[TestCase(2.02)]
 		[TestCase(2.10)]
 		[TestCase(100)]
-		public void an_item_prize_is_specified_when_the_item_is_constructed(decimal prize)
+		public void an_item_price_is_specified_when_the_item_is_constructed(decimal price)
 		{
-			new Item(prize).Prize.Should().Be.EqualTo(prize);
+			new Item(price).Price.Should().Be.EqualTo(price);
 		}
 	}
 }

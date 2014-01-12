@@ -2,16 +2,16 @@ namespace SalesTax
 {
 	public class Item
 	{
-		private readonly decimal _prize;
+		private readonly decimal _price;
 
-		public Item(decimal prize)
+		public Item(decimal price)
 		{
-			_prize = prize;
+			_price = price;
 		}
 
-		public decimal Prize
+		public decimal Price
 		{
-			get { return _prize; }
+			get { return _price; }
 		}
 	}
 }
