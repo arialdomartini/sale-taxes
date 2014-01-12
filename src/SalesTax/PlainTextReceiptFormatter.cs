@@ -7,9 +7,11 @@ namespace SalesTax
 	{
 		private readonly ICurrencyFormatter _currencyFormatter;
 		private readonly List<PrintableItem> _items;
+		private decimal _total;
 
 		public PlainTextReceiptFormatter(ICurrencyFormatter currencyFormatter)
 		{
+			_total = 0;
 			_currencyFormatter = currencyFormatter;
 			_items = new List<PrintableItem>();
 		}
@@ -24,13 +26,14 @@ namespace SalesTax
 				sb.AppendLine(string.Format("{0}: {1}", item.Name, totalPriceString));
 			}
 			sb.AppendLine("Sales Taxes: 0.00");
-			sb.AppendLine("Total: 0.00");
+			sb.AppendLine(string.Format("Total: {0}", _currencyFormatter.Format(_total)));
 
 			return sb.ToString();
 		}
 
 		public void Add(string name, decimal price, decimal tax)
 		{
+			_total += price + tax;
 			_items.Add(new PrintableItem(name, price, tax));
 		}
 
