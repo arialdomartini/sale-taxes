@@ -50,7 +50,7 @@ namespace SalesTax.Test
 		{
 			var items = new List<ICanBeSold>
 				{
-					new Book("Title", (decimal) 10, hasBeenImported:true),
+					new Book("Name", (decimal) 10, hasBeenImported:true),
 					new Food("Honey", (decimal) 1.2, hasBeenImported:true),
 					new Item("Gun", 1000, hasBeenImported:true)
 				};
@@ -83,7 +83,7 @@ namespace SalesTax.Test
 
 			var items = new List<ICanBeSold>
 				{
-					new Book("Title", (decimal) 12.49),
+					new Book("Name", (decimal) 12.49),
 					new Item("Music CD", (decimal) 14.99),
 					new Food("Chocolate bar", (decimal) 0.85)
 				};

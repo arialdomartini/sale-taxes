@@ -106,5 +106,30 @@ namespace SalesTax.Test
 			_receiptFormatter.Received().Print();
 		}
 		
+
+		[Test]
+		public void basket_should_load_its_receipt_formatter_with_its_items()
+		{
+			const decimal tax1 = (decimal)1;
+			var item1 = new Item("foo", 10);
+
+			const decimal tax2 = (decimal)2.99;
+			var item2 = new Item("bar", 100);
+
+			var items = new List<ICanBeSold>
+				{
+					item1,
+					item2
+				};
+			_taxCalculator.CalculateOn(item1).Returns(tax1);
+			_taxCalculator.CalculateOn(item2).Returns(tax2);
+			var basket = new Basket(_taxCalculator, _receiptFormatter, items);
+
+			basket.PrintReceipt();
+
+			_receiptFormatter.Received().Add(item1.Name, item1.Price, tax1);
+			_receiptFormatter.Received().Add(item2.Name, item2.Price, tax2);
+		}
+		
     }
 }

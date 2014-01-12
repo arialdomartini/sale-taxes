@@ -44,6 +44,10 @@ namespace SalesTax
 
 	    public string PrintReceipt()
 	    {
+		    foreach (var item in _items)
+		    {
+			    _receiptFormatter.Add(item.Name, item.Price, _taxCalculator.CalculateOn(item));
+		    }
 		    return _receiptFormatter.Print();
 	    }
     }

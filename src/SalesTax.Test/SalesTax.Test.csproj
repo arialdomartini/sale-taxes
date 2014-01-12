@@ -62,6 +62,7 @@
     <Compile Include="Items\MedicalProductTest.cs" />
     <Compile Include="Items\ItemTest.cs" />
     <Compile Include="PlainTextReceiptFormatterTest.cs" />
+    <Compile Include="StaticCurrencyFormatterTest.cs" />
     <Compile Include="TaxCalculator\DutyTaxCalculatorTest.cs" />
     <Compile Include="ItemTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
