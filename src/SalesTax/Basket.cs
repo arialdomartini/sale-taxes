@@ -26,5 +26,15 @@ namespace SalesTax
 				return total;
 			}
 	    }
+
+	    public decimal TotalTaxes
+	    {
+			get
+			{
+				decimal total = 0;
+				_items.ForEach(i => total += _dutyTaxCalculator.CalculateOn(i));
+				return total;
+			}
+	    }
     }
 }

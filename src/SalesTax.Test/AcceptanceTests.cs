@@ -8,7 +8,7 @@ namespace SalesTax.Test
 	public class AcceptanceTests
 	{
 		[Test]
-		public void the_total_price_of_a_list_of_books_inlcudes_duty_taxes()
+		public void the_total_price_of_a_list_of_books_inlcudes_duty_taxes_which_are_separately_returned()
 		{
 			var items = new List<Item>
 				{
@@ -16,9 +16,10 @@ namespace SalesTax.Test
 					new Item((decimal) 1.2)
 				};
 
-			var total = new Basket(new DutyTaxCalculator(), items).Total;
+			var basket = new Basket(new DutyTaxCalculator(), items);
 
-			total.Should().Be.EqualTo(11.2 + 0.05 + 0.50);
+			basket.Total.Should().Be.EqualTo(11.2 + 0.05 + 0.50);
+			basket.TotalTaxes.Should().Be.EqualTo(0.05 + 0.50);
 		}
 	}
 }
